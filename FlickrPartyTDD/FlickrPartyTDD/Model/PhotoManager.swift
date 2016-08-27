@@ -9,16 +9,18 @@
 import Foundation
 
 class PhotoManager {
-    var count: Int = 0
+    
+    var count: Int {
+        return photos.count
+    }
     
     private var photos = [Photo]()
     
-    func addPhoto(photo: Photo) {
-        count += 1
+    func add(photo: Photo) {
         photos.append(photo)
     }
     
-    func photoAtIndex(index: Int) -> Photo? {
+    func itemAtIndex(index: Int) -> Photo? {
         guard (index >= 0 && index < photos.count) else {
             return nil
         }
@@ -27,8 +29,11 @@ class PhotoManager {
     }
     
     func removeAll() {
-        count = 0
         photos.removeAll()
+    }
+    
+    func addAll(items: [Photo]) {
+        photos.appendContentsOf(items)
     }
     
 }

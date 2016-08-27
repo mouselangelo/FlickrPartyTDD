@@ -27,27 +27,27 @@ class PhotoManagerTests: XCTestCase {
     }
     
     func testAddingPhotos_IncreasesCount() {
-        sut.addPhoto(testPhoto)
+        sut.add(testPhoto)
         XCTAssertEqual(sut.count, 1, "Count should be same as number of photos added")
     }
     
-    func testGetPhotoAtIndex_ShouldReturnTheCorrectPhoto() {
-        sut.addPhoto(testPhoto)
-        let firstPhoto = sut.photoAtIndex(0)
+    func testGetitemAtIndex_ShouldReturnTheCorrectPhoto() {
+        sut.add(testPhoto)
+        let firstPhoto = sut.itemAtIndex(0)
         
         XCTAssertEqual(firstPhoto?.url, testPhoto.url,
                        "Should be the photo we just added")
     }
     
-    func testGetPhotoAtIndex_ForDifferentIndices_ShouldReturnTheCorrectPhoto() {
-        sut.addPhoto(testPhoto)
+    func testGetitemAtIndex_ForDifferentIndices_ShouldReturnTheCorrectPhoto() {
+        sut.add(testPhoto)
         
         let anotherPhoto = PhotoItem(url: NSURL(string: "http://example2.com")!, thumbnailURL: NSURL(string: "http://example2.com")!, title: "Another photo")
         
-        sut.addPhoto(anotherPhoto)
+        sut.add(anotherPhoto)
         
-        let firstPhoto = sut.photoAtIndex(0)
-        let secondPhoto = sut.photoAtIndex(1)
+        let firstPhoto = sut.itemAtIndex(0)
+        let secondPhoto = sut.itemAtIndex(1)
         
         XCTAssertEqual(firstPhoto?.url, testPhoto.url,
                        "Should be the first photo")
@@ -57,17 +57,35 @@ class PhotoManagerTests: XCTestCase {
     }
     
     func testRemoveAll_SetsCountToZero() {
-        sut.addPhoto(testPhoto)
+        sut.add(testPhoto)
         XCTAssertEqual(sut.count, 1, "Count should be same as number of photos added")
         sut.removeAll()
         XCTAssertEqual(sut.count, 0, "Count should be 0 after remove all")
     }
     
     func testRemoveAll_ShouldRemoveAllItems() {
-        sut.addPhoto(testPhoto)
+        sut.add(testPhoto)
         XCTAssertEqual(sut.count, 1, "Count should be same as number of photos added")
         sut.removeAll()
-        let noItem = sut.photoAtIndex(0)
+        let noItem = sut.itemAtIndex(0)
         XCTAssertNil(noItem, "There should be no items after removeAll")
     }
+    
+    func testAddAll_ShouldAddAllItems() {
+        let itemsToAdd = generateItems(10)
+        sut.addAll(itemsToAdd)
+        XCTAssertEqual(sut.count, itemsToAdd.count)
+    }
+    
+    private func generateItems(count:Int) -> [Photo] {
+        var photos = [Photo]()
+        for i in 1...count {
+            let url = NSURL(string: "http://example\(i).com")!
+            let item = PhotoItem(url: url, thumbnailURL: url,
+                                 title: "Title \(i)")
+            photos.append(item)
+        }
+        return photos
+    }
+    
 }
