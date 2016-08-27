@@ -15,6 +15,9 @@
 		61839F5A1D71975000B74067 /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61839F581D71975000B74067 /* PhotoItem.swift */; };
 		61AC006F1D71AA8200CDC420 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC006E1D71AA8200CDC420 /* PhotoManager.swift */; };
 		61AC00711D71AA9000CDC420 /* PhotoManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC00701D71AA9000CDC420 /* PhotoManagerTests.swift */; };
+		61AC00751D71AF6E00CDC420 /* FlickrAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC00741D71AF6E00CDC420 /* FlickrAPIServiceTests.swift */; };
+		61AC00771D71B00F00CDC420 /* FlickrAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC00761D71B00F00CDC420 /* FlickrAPIService.swift */; };
+		61AC00791D71EEC400CDC420 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC00781D71EEC400CDC420 /* Mocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		61839F581D71975000B74067 /* PhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoItem.swift; path = Model/PhotoItem.swift; sourceTree = "<group>"; };
 		61AC006E1D71AA8200CDC420 /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoManager.swift; path = Model/PhotoManager.swift; sourceTree = "<group>"; };
 		61AC00701D71AA9000CDC420 /* PhotoManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoManagerTests.swift; path = Model/PhotoManagerTests.swift; sourceTree = "<group>"; };
+		61AC00741D71AF6E00CDC420 /* FlickrAPIServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrAPIServiceTests.swift; sourceTree = "<group>"; };
+		61AC00761D71B00F00CDC420 /* FlickrAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrAPIService.swift; path = Model/FlickrAPIService.swift; sourceTree = "<group>"; };
+		61AC00781D71EEC400CDC420 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mocks.swift; path = Mocks/Mocks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 			children = (
 				611FC5991D7164F3001E7CA8 /* Info.plist */,
 				61839F4E1D7178C300B74067 /* Model */,
+				61AC007A1D71EECB00CDC420 /* Mocks */,
 			);
 			path = FlickrPartyTDDTests;
 			sourceTree = "<group>";
@@ -131,6 +138,7 @@
 				61839F571D71975000B74067 /* Photo.swift */,
 				61839F581D71975000B74067 /* PhotoItem.swift */,
 				61AC006E1D71AA8200CDC420 /* PhotoManager.swift */,
+				61AC00761D71B00F00CDC420 /* FlickrAPIService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -140,8 +148,17 @@
 			children = (
 				61839F491D7168CE00B74067 /* PhotoTests.swift */,
 				61AC00701D71AA9000CDC420 /* PhotoManagerTests.swift */,
+				61AC00741D71AF6E00CDC420 /* FlickrAPIServiceTests.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		61AC007A1D71EECB00CDC420 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				61AC00781D71EEC400CDC420 /* Mocks.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61AC00771D71B00F00CDC420 /* FlickrAPIService.swift in Sources */,
 				61839F591D71975000B74067 /* Photo.swift in Sources */,
 				611FC5831D7164F3001E7CA8 /* AppDelegate.swift in Sources */,
 				61AC006F1D71AA8200CDC420 /* PhotoManager.swift in Sources */,
@@ -286,7 +304,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				61AC00711D71AA9000CDC420 /* PhotoManagerTests.swift in Sources */,
+				61AC00751D71AF6E00CDC420 /* FlickrAPIServiceTests.swift in Sources */,
 				61839F4A1D7168CE00B74067 /* PhotoTests.swift in Sources */,
+				61AC00791D71EEC400CDC420 /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
