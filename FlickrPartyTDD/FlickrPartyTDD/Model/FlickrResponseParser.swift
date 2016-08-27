@@ -13,14 +13,10 @@ class FlickrResponseParser {
     
     func parse(json:String, handler: ParserHandler) {
         
-        guard let data = json.dataUsingEncoding(NSUTF8StringEncoding) else {
-            handler(result: nil, totalCount: -1, error: ServiceError.InvalidJSON)
-            return
-        }
+        guard let data = json.dataUsingEncoding(NSUTF8StringEncoding) else { invalidJSON(handler); return }
+        guard let jsonResponse = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) else { invalidJSON(handler); return }
         
-        guard let jsonResponse = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) else { handler(result: nil, totalCount: -1, error: ServiceError.InvalidJSON); return }
-        
-        guard let result = jsonResponse["photos"] as? [String:AnyObject] else { handler(result: nil, totalCount: -1, error: ServiceError.InvalidJSON); return }
+        guard let result = jsonResponse["photos"] as? [String:AnyObject] else { invalidJSON(handler); return }
         
         var resultTotalCount = 0
         
@@ -29,8 +25,7 @@ class FlickrResponseParser {
             print("Total Results \(resultTotalCount)")
         }
         
-        guard let photoArray = result["photo"] as? [AnyObject] else { handler(result: nil, totalCount: -1, error: ServiceError.InvalidJSON); return }
-        
+        guard let photoArray = result["photo"] as? [AnyObject] else { invalidJSON(handler); return }        
         var photos = [Photo]()
         
         for photoDict in photoArray {
@@ -41,6 +36,10 @@ class FlickrResponseParser {
         }
         
         handler(result: photos, totalCount: resultTotalCount, error: nil)
+    }
+    
+    private func invalidJSON(handler: ParserHandler) {
+        handler(result: nil, totalCount: -1, error: ServiceError.InvalidJSON);
     }
 }
 
