@@ -143,4 +143,5 @@ extension FlickrAPIService {
 enum ServiceError: ErrorType {
     case RequestFailed
     case InvalidResponse
+    case InvalidJSON
 }
