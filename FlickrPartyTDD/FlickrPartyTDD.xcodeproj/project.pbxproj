@@ -10,6 +10,9 @@
 		611FC5831D7164F3001E7CA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611FC5821D7164F3001E7CA8 /* AppDelegate.swift */; };
 		611FC58A1D7164F3001E7CA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 611FC5891D7164F3001E7CA8 /* Assets.xcassets */; };
 		611FC58D1D7164F3001E7CA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 611FC58B1D7164F3001E7CA8 /* LaunchScreen.storyboard */; };
+		61839F4A1D7168CE00B74067 /* PhotoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61839F491D7168CE00B74067 /* PhotoTests.swift */; };
+		61839F4C1D716B0B00B74067 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61839F4B1D716B0B00B74067 /* Photo.swift */; };
+		61839F501D7179D600B74067 /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61839F4F1D7179D600B74067 /* PhotoItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +42,9 @@
 		611FC5991D7164F3001E7CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		611FC59E1D7164F3001E7CA8 /* FlickrPartyTDDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrPartyTDDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		611FC5A41D7164F3001E7CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61839F491D7168CE00B74067 /* PhotoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoTests.swift; path = Model/PhotoTests.swift; sourceTree = "<group>"; };
+		61839F4B1D716B0B00B74067 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		61839F4F1D7179D600B74067 /* PhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,7 @@
 				611FC5891D7164F3001E7CA8 /* Assets.xcassets */,
 				611FC58B1D7164F3001E7CA8 /* LaunchScreen.storyboard */,
 				611FC58E1D7164F3001E7CA8 /* Info.plist */,
+				61839F4D1D7178BE00B74067 /* Model */,
 			);
 			path = FlickrPartyTDD;
 			sourceTree = "<group>";
@@ -101,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				611FC5991D7164F3001E7CA8 /* Info.plist */,
+				61839F4E1D7178C300B74067 /* Model */,
 			);
 			path = FlickrPartyTDDTests;
 			sourceTree = "<group>";
@@ -111,6 +119,23 @@
 				611FC5A41D7164F3001E7CA8 /* Info.plist */,
 			);
 			path = FlickrPartyTDDUITests;
+			sourceTree = "<group>";
+		};
+		61839F4D1D7178BE00B74067 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61839F4B1D716B0B00B74067 /* Photo.swift */,
+				61839F4F1D7179D600B74067 /* PhotoItem.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		61839F4E1D7178C300B74067 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61839F491D7168CE00B74067 /* PhotoTests.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,7 +268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61839F4C1D716B0B00B74067 /* Photo.swift in Sources */,
 				611FC5831D7164F3001E7CA8 /* AppDelegate.swift in Sources */,
+				61839F501D7179D600B74067 /* PhotoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61839F4A1D7168CE00B74067 /* PhotoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,10 +427,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FlickrPartyTDDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.deuxlapins.FlickrPartyTDDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlickrPartyTDD.app/FlickrPartyTDD";
 			};
 			name = Debug;
@@ -411,6 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FlickrPartyTDDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.deuxlapins.FlickrPartyTDDTests;
