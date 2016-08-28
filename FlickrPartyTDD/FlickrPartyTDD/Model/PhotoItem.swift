@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- A Photo!
+ Implementation of a Photo
  */
 class PhotoItem: Photo {
     let url: NSURL

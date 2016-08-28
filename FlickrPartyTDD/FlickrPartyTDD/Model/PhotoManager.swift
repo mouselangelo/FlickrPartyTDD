@@ -10,16 +10,19 @@ import Foundation
 
 class PhotoManager {
     
+    private var photos = [Photo]()
+
+    /** Returns the count of Photos*/
     var count: Int {
         return photos.count
     }
     
-    private var photos = [Photo]()
-    
+    /** Adds a single Photo */
     func add(photo: Photo) {
         photos.append(photo)
     }
     
+    /** Returns the item at a given index or nil*/
     func itemAtIndex(index: Int) -> Photo? {
         guard (index >= 0 && index < photos.count) else {
             return nil
@@ -28,10 +31,12 @@ class PhotoManager {
         return photos[index]
     }
     
+    /** Removes all Photos */
     func removeAll() {
         photos.removeAll()
     }
     
+    /** Adds all Photos from given array of Photos */
     func addAll(items: [Photo]) {
         photos.appendContentsOf(items)
     }
