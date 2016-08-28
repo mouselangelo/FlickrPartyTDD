@@ -9,7 +9,9 @@
 import UIKit
 
 class GalleryCollectionViewCell: UICollectionViewCell {
-    
+
+    var imageView: UIImageView?
+
     var photo: Photo?
     
     override init(frame: CGRect) {
@@ -24,6 +26,17 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     
     func baseInit() {
         backgroundColor = UIColor.blueColor()
+        // initialize the imageView
+        imageView = UIImageView()
+        
+        // using autolayout
+        imageView?.translatesAutoresizingMaskIntoConstraints = false
+        // imageview's image should display within bounds and  scaled to fill
+        imageView?.clipsToBounds = true
+        imageView?.contentMode = UIViewContentMode.ScaleAspectFill
+        
+        // add it to cell pinning edges
+        addSubViewPinningEdges(imageView!)
     }
     
     

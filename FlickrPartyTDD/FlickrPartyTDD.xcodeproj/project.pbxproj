@@ -27,6 +27,7 @@
 		61E1FFF21D721FE400F516ED /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFF11D721FE400F516ED /* GalleryCollectionViewCell.swift */; };
 		61E1FFF51D72260E00F516ED /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFF41D72260E00F516ED /* DataProvider.swift */; };
 		61E1FFF71D72D3CA00F516ED /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFF61D72D3CA00F516ED /* Extensions.swift */; };
+		61E1FFFA1D72D4ED00F516ED /* GalleryCollectionViewCellTets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFF91D72D4ED00F516ED /* GalleryCollectionViewCellTets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		61E1FFF11D721FE400F516ED /* GalleryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryCollectionViewCell.swift; path = View/GalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		61E1FFF41D72260E00F516ED /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataProvider.swift; path = Controller/DataProvider.swift; sourceTree = "<group>"; };
 		61E1FFF61D72D3CA00F516ED /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Extensions/Extensions.swift; sourceTree = "<group>"; };
+		61E1FFF91D72D4ED00F516ED /* GalleryCollectionViewCellTets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryCollectionViewCellTets.swift; path = View/GalleryCollectionViewCellTets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				611FC5991D7164F3001E7CA8 /* Info.plist */,
 				61839F4E1D7178C300B74067 /* Model */,
 				61AC00861D7209CB00CDC420 /* Controller */,
+				61E1FFFB1D72D82400F516ED /* View */,
 			);
 			path = FlickrPartyTDDTests;
 			sourceTree = "<group>";
@@ -235,6 +238,14 @@
 				61E1FFF61D72D3CA00F516ED /* Extensions.swift */,
 			);
 			name = Util;
+			sourceTree = "<group>";
+		};
+		61E1FFFB1D72D82400F516ED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E1FFF91D72D4ED00F516ED /* GalleryCollectionViewCellTets.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,6 +401,7 @@
 				61AC00751D71AF6E00CDC420 /* FlickrAPIServiceTests.swift in Sources */,
 				61AC008E1D72107000CDC420 /* GalleryDataProviderTests.swift in Sources */,
 				61839F4A1D7168CE00B74067 /* PhotoTests.swift in Sources */,
+				61E1FFFA1D72D4ED00F516ED /* GalleryCollectionViewCellTets.swift in Sources */,
 				61AC00791D71EEC400CDC420 /* Mocks.swift in Sources */,
 				61AC00821D72091200CDC420 /* GalleryViewControllerTests.swift in Sources */,
 			);
