@@ -9,7 +9,7 @@
 import XCTest
 @testable import FlickrPartyTDD
 
-class GalleryCollectionViewCellTets: XCTestCase {
+class GalleryCollectionViewCellTests: XCTestCase {
     
     var sut: GalleryCollectionViewCell!
     var dataSource: FakeDataSource!
@@ -35,9 +35,13 @@ class GalleryCollectionViewCellTets: XCTestCase {
     func testGalleryCell_HasImageView() {
         XCTAssertNotNil(sut.imageView, "ImageView should have been initialized")
     }
+    
+    func testCellImageView_AfterConfigCell_HasImage() {
+        let photo = createPhotoWithSampleItem()
+    }
 }
 
-extension GalleryCollectionViewCellTets {
+extension GalleryCollectionViewCellTests {
     class FakeDataSource: NSObject, UICollectionViewDataSource {
         func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return 1
@@ -46,6 +50,18 @@ extension GalleryCollectionViewCellTets {
         func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
             return GalleryCollectionViewCell()
         }
+    }
+    
+    func createPhotoWithSampleItem() -> Photo {
+        let thumbnail = NSURL(string: "")!
+        let url = NSURL(string: "")!
+        let title = "Sample Photo"
         
+        let photo = PhotoItem(
+            url: url,
+            thumbnailURL: thumbnail,
+            title: title)
+        
+        return photo
     }
 }
