@@ -45,6 +45,10 @@ class GalleryViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.collectionView?.dataSource as? GalleryDataProvider, sut.collectionView?.delegate as? GalleryDataProvider, "DataSource and Delegate should be the same instance")
     }
     
+    func testGallertVC_DataProvider_HasPhotoManager() {
+        XCTAssertNotNil(sut.dataProvider?.photoManager)
+    }
+    
     func testPhotoSelectedNotification_PushedPhotoVC() {
         // use a mock NavigationViewController to verify
         let mockingNavigationController = MockNavigationController(rootViewController: sut)

@@ -25,10 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // the initial viewController to be displayed
         let viewController = GalleryViewController()
-        let dataProvider = GalleryDataProvider()
-        dataProvider.photoManager = PhotoManager()
-        let item = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!, title: "Test Title")
-        dataProvider.photoManager?.add(item)
+
+        let apiService = FlickrAPIService()
+        let parser = FlickrResponseParser()
+        let loader = FlickrPhotoLoader(apiService: apiService, parser: parser)
+        
+        let photoManager = PhotoManager(loader: loader)
+        
+        let dataProvider = GalleryDataProvider(photoManager: photoManager)
         viewController.dataProvider = dataProvider
         
         

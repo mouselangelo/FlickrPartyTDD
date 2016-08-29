@@ -77,6 +77,38 @@ class PhotoManagerTests: XCTestCase {
         XCTAssertEqual(sut.count, itemsToAdd.count)
     }
     
+    func testAddingAPhoto_FiresDataChangedNotification() {
+        let itemToAdd = generateItems(1).first!
+        expectationForNotification(PhotoManager.DataChangeNotificationName, object: sut) { (notification) -> Bool in
+            return true
+        }
+        sut.add(itemToAdd)
+        waitForExpectationsWithTimeout(1, handler: nil)
+        XCTAssertEqual(sut.count, 1)
+    }
+    
+    func testAddingPhotos_FiresDataChangedNotification() {
+        let itemsToAdd = generateItems(10)
+       expectationForNotification(PhotoManager.DataChangeNotificationName, object: sut) { (notification) -> Bool in
+            return true
+        }
+        sut.addAll(itemsToAdd)
+        waitForExpectationsWithTimeout(1, handler: nil)
+        XCTAssertEqual(sut.count, itemsToAdd.count)
+    }
+    
+    func testRemovingPhotos_FiresDataChangedNotification() {
+        let itemsToAdd = generateItems(10)
+        sut.addAll(itemsToAdd)
+        XCTAssertEqual(sut.count, itemsToAdd.count)
+        expectationForNotification(PhotoManager.DataChangeNotificationName, object: sut) { (notification) -> Bool in
+            return true
+        }
+        sut.removeAll()
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
+    
+    
     private func generateItems(count:Int) -> [Photo] {
         var photos = [Photo]()
         for i in 1...count {

@@ -134,6 +134,34 @@ class GalleryDataProviderTests: XCTestCase {
         collectionView.delegate?.collectionView!(collectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0))
         waitForExpectationsWithTimeout(3, handler: nil)
     }
+    
+    func testDataProvider_OnDataChangeNotification_callsCollectionViewRealodData() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: layout)
+        
+        collectionView.dataSource = sut
+        sut.registerCellIdentifiers(collectionView)
+        
+        XCTAssertFalse(collectionView.reloadDataGotCalled)
+
+        sut.photoManager?.add(createPhoto(withId: 1))
+        
+        XCTAssertTrue(collectionView.reloadDataGotCalled, "collectionView reloadData should get called on data changed")
+    }
+    
+    func testDataProvider_OnRegister_CallsPhotoManagerLoadPhotos() {
+        let layout = UICollectionViewFlowLayout()
+
+        let collectionView = UICollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: layout)
+        
+        let mockPhotoManager = MockPhotoManager()
+        
+        sut.photoManager = mockPhotoManager
+        XCTAssertFalse(mockPhotoManager.loadPhotosCalled)
+        sut.registerCellIdentifiers(collectionView)
+        
+        XCTAssertTrue(mockPhotoManager.loadPhotosCalled)
+    }
 
     
     private func generateItems(count:Int) -> [Photo] {
@@ -151,18 +179,26 @@ class GalleryDataProviderTests: XCTestCase {
                              title: "Title \(id)")
         return item
     }
-    
+}
+
+extension GalleryDataProviderTests {
     class MockCollectionView: UICollectionView {
         
         var cellGotDequeed = false
+        var reloadDataGotCalled = false
         
         override func cellForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewCell? {
-           return dataSource?.collectionView(self, cellForItemAtIndexPath: indexPath)
+            return dataSource?.collectionView(self, cellForItemAtIndexPath: indexPath)
         }
         
         override func dequeueReusableCellWithReuseIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
             cellGotDequeed = true
             return super.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)
+        }
+        
+        override func reloadData() {
+            reloadDataGotCalled = true
+            super.reloadData()
         }
     }
     
@@ -186,6 +222,16 @@ class GalleryDataProviderTests: XCTestCase {
         override func configCell(withItem item: Photo) {
             configCellGotCalled = true
             super.configCell(withItem: item)
+        }
+    }
+    
+    class MockPhotoManager: PhotoManager {
+        
+        var loadPhotosCalled = false
+        
+        override func loadPhotos() {
+            loadPhotosCalled = true
+            super.loadPhotos()
         }
     }
 }

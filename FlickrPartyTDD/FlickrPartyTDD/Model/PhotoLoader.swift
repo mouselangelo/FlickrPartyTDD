@@ -9,5 +9,9 @@
 import Foundation
 
 protocol PhotoLoader {
-    func loadPhoto(completion: (result:[Photo]?, error:NSError?) -> Void)
+    func loadPhotos(completion: (result:[Photo]?, error:PhotoLoaderError?) -> Void)
+}
+
+enum PhotoLoaderError: ErrorType {
+    case NetworkCallFailed
 }

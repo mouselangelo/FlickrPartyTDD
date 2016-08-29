@@ -10,8 +10,42 @@ import Foundation
 
 class PhotoManager {
     
+    static let DataChangeNotificationName = "PhotoManagerDataChanged"
+    
+    private var loader: PhotoLoader?
+    
     private var photos = [Photo]()
-
+    
+    init() {
+    }
+    
+    init(loader: PhotoLoader) {
+        self.loader = loader
+    }
+    
+    func loadPhotos() {
+        loader?.loadPhotos { (result, error) in
+            guard error == nil else {
+                self.handleError(error)
+                return
+            }
+            guard let result = result else {
+                self.handleError(nil)
+                return
+            }
+            self.addAll(result)
+        }
+    }
+    
+    private func handleError(error: PhotoLoaderError?) {
+        print("Error...")
+    }
+    
+    private func dataChanged() {
+        NSNotificationCenter.defaultCenter().postNotificationName(
+            PhotoManager.DataChangeNotificationName, object: self)
+    }
+    
     /** Returns the count of Photos*/
     var count: Int {
         return photos.count
@@ -20,6 +54,7 @@ class PhotoManager {
     /** Adds a single Photo */
     func add(photo: Photo) {
         photos.append(photo)
+        dataChanged()
     }
     
     /** Returns the item at a given index or nil*/
@@ -34,11 +69,13 @@ class PhotoManager {
     /** Removes all Photos */
     func removeAll() {
         photos.removeAll()
+        dataChanged()
     }
     
     /** Adds all Photos from given array of Photos */
     func addAll(items: [Photo]) {
         photos.appendContentsOf(items)
+        dataChanged()
     }
     
 }

@@ -18,24 +18,24 @@ class PhotoLoaderTests: XCTestCase {
     }
     
     func testPhotoLoader_LoadsPhotos() {
-        let expectation = expectationWithDescription("LoadPhotos")
-        sut.loadPhoto { (result, error) in
+        let expectation = expectationWithDescription("LoadPhotosFromMock")
+        sut.loadPhotos { (result, error) in
             if let result = result {
                 print(result)
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         waitForExpectationsWithTimeout(3, handler: nil)
     }
     
     func testPhotoLoader_WithoutMock_LoadsPhotos() {
         let sut = FlickrPhotoLoader(apiService: FlickrAPIService(), parser: FlickrResponseParser())
-        let expectation = expectationWithDescription("LoadPhotos")
-        sut.loadPhoto { (result, error) in
+        let expectation = expectationWithDescription("LoadPhotosfromAPI")
+        sut.loadPhotos { (result, error) in
             if let result = result {
                 print(result)
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         waitForExpectationsWithTimeout(20, handler: nil)
     }    
