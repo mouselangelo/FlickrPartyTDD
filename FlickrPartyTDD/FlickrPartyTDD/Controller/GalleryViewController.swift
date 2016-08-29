@@ -13,15 +13,47 @@ class GalleryViewController: UIViewController {
     var collectionView: UICollectionView!
     
     // should be injected
-    var dataProvider: PhotoDataProvider?
+    var dataProvider: PhotoDataProvider? {
+        didSet {
+            registerDataProvider()
+        }
+    }
     
     lazy var collectionViewLayout = UICollectionViewLayout()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.redColor()
+        
+        navigationItem.title = "FlickrParty"
+        
+        view.backgroundColor = UIColor.redColor() // test
+        
         initCollectionView()
+
+        registerForNotifications()
     }
+    
+    private func registerForNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(handlePhotoSelectedNotification),
+            name: "PhotoSelectedNotification",
+            object: nil)
+    }
+    
+    func handlePhotoSelectedNotification(notification: NSNotification) {
+        guard let index = notification.userInfo?["index"] as? Int else { fatalError("Invalid UserInfo in Notification") }
+        
+        guard let photoManager = dataProvider?.photoManager else { return }
+        
+        let photoInfo = (photoManager, index)
+        let photoVC = PhotoViewController()
+        photoVC.photoInfo = photoInfo
+        navigationController?.pushViewController(photoVC, animated: true)
+        print("Pushing... \(photoVC)")
+    }
+
+    
     // initializes the collection view, sets its datasource and delegate and adds it to current view
     private func initCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -29,9 +61,16 @@ class GalleryViewController: UIViewController {
         collectionView = UICollectionView(frame: self.view.bounds , collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.yellowColor()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView!.dataSource = dataProvider
-        collectionView!.delegate = dataProvider
-        dataProvider?.registerCellIdentifiers(collectionView!)
         self.view.addSubViewPinningEdges(collectionView)
+        registerDataProvider()
     }
+    
+    private func registerDataProvider() {
+        guard let collectionView = collectionView, dataProvider = dataProvider else { return }
+        
+        collectionView.dataSource = dataProvider
+        collectionView.delegate = dataProvider
+        dataProvider.registerCellIdentifiers(collectionView)
+    }
+    
 }

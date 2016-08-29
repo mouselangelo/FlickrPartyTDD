@@ -18,7 +18,8 @@ class GalleryDataProviderTests: XCTestCase {
         sut = GalleryDataProvider()
         sut.photoManager = PhotoManager()
         galleryViewController = GalleryViewController()
-        galleryViewController.view.frame = CGRectMake(0, 0, 320, 480)
+        galleryViewController.dataProvider = sut
+        _ = galleryViewController.view
         collectionView = galleryViewController.collectionView
         collectionView.dataSource = sut
         collectionView.delegate = sut
@@ -117,6 +118,23 @@ class GalleryDataProviderTests: XCTestCase {
 
         XCTAssertEqual(cell.photo?.url, photo.url, "Cell should get configured with correct photo")
     }
+    
+    
+    func testSelectingACell_SendsNotification() {
+        let phtoto = createPhoto(withId: 1)
+        sut.photoManager?.add(phtoto)
+        
+        expectationForNotification("PhotoSelectedNotification", object: nil) { (notification) -> Bool in
+            guard let index = notification.userInfo?["index"] as? Int else {
+                return false
+            }
+            return index == 0
+        }
+                
+        collectionView.delegate?.collectionView!(collectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0))
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
+
     
     private func generateItems(count:Int) -> [Photo] {
         var photos = [Photo]()

@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = GalleryViewController()
         let dataProvider = GalleryDataProvider()
         dataProvider.photoManager = PhotoManager()
-        let item = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!)
+        let item = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!, title: "Test Title")
         dataProvider.photoManager?.add(item)
         viewController.dataProvider = dataProvider
         

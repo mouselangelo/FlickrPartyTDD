@@ -44,8 +44,61 @@ class PhotoViewControllerTests: XCTestCase {
     }
     
     func testImageView_IsSubViewOfScrollView() {
-        XCTAssertTrue(sut.imageView!.isDescendantOfView(sut.scrollView!), "ImageView should be subview of ScrollView")
+        XCTAssertTrue(
+            sut.imageView!.isDescendantOfView(sut.scrollView!),
+            "ImageView should be subview of ScrollView")
     }
+    
+    func testPhotoVC_IsScrolLViewDelegate() {
+        XCTAssertTrue(sut.conformsToProtocol(UIScrollViewDelegate), "PhotoVC must conform to ScrollViewDelegate protocol")
+    }
+    
+    func testPhotoVC_viewForZooming_ShouldBeImageView() {
+        
+        guard let scrollView = sut.scrollView else {
+            XCTFail("View must have scrollview")
+            return
+        }
+        
+        guard let viewForScrolling = sut.viewForZoomingInScrollView(scrollView) else {
+            XCTFail("viewForZoomingInScrollView must be set")
+            return
+        }
+        
+        let imageView = sut.imageView
+        
+        XCTAssertTrue(viewForScrolling === imageView, "View for scrolling should be ImageView")
+        
+        
+    }
+    
+    func testScrollView_ShouldNotDisplayIndicators() {
+        guard let scrollView = sut.scrollView else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertFalse(scrollView.showsHorizontalScrollIndicator, "ScrollView must not show horizontal scroll indicators")
+        XCTAssertFalse(scrollView.showsVerticalScrollIndicator, "ScrollView must not show vertical scroll indicators")
+    }
+    
+    func testScrollView_ShouldSetCorrectZoomLevels() {
+        guard let scrollView = sut.scrollView else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(scrollView.minimumZoomScale, 0.5)
+        XCTAssertEqual(scrollView.maximumZoomScale, 2.0)
+    }
+    
+    func testScrollView_HasViewControllerAsDelegate() {
+        XCTAssertNotNil(sut.scrollView?.delegate, "ScrollView delegate should be set")
+        XCTAssertTrue(sut.scrollView?.delegate === sut,
+                       "VC should be set as delegate")
+    }
+    
+    
     
     func testSUTAfterViewWillAppear_SetsNavigationItemTitle_ToPhotosTitile() {
         // force calling viewWillAppear

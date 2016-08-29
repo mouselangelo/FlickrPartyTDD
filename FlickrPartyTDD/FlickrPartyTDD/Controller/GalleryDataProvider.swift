@@ -35,6 +35,10 @@ class GalleryDataProvider: NSObject, PhotoDataProvider {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        NSNotificationCenter.defaultCenter().postNotificationName("PhotoSelectedNotification", object: self, userInfo: ["index" : indexPath.item])
+    }
+    
     // optional as defaults to 1 anyway
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
