@@ -29,28 +29,6 @@ class GalleryViewController: UIViewController {
         view.backgroundColor = UIColor.redColor() // test
         
         initCollectionView()
-
-        registerForNotifications()
-    }
-    
-    private func registerForNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(handlePhotoSelectedNotification),
-            name: "PhotoSelectedNotification",
-            object: nil)
-    }
-    
-    func handlePhotoSelectedNotification(notification: NSNotification) {
-        guard let index = notification.userInfo?["index"] as? Int else { fatalError("Invalid UserInfo in Notification") }
-        
-        guard let photoManager = dataProvider?.photoManager else { return }
-        
-        let photoInfo = (photoManager, index)
-        let photoVC = PhotoViewController()
-        photoVC.photoInfo = photoInfo
-        navigationController?.pushViewController(photoVC, animated: true)
-        print("Pushing... \(photoVC)")
     }
 
     
@@ -69,8 +47,22 @@ class GalleryViewController: UIViewController {
         guard let collectionView = collectionView, dataProvider = dataProvider else { return }
         
         collectionView.dataSource = dataProvider
-        collectionView.delegate = dataProvider
+        collectionView.delegate = self
         dataProvider.registerCellIdentifiers(collectionView)
     }
     
+}
+
+extension GalleryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let photoManager = dataProvider?.photoManager else { return }
+        
+        let photoInfo = (photoManager, indexPath.item)
+        
+        let photoVC = PhotoViewController()
+        photoVC.photoInfo = photoInfo
+        navigationController?.pushViewController(photoVC, animated: true)
+        print("Pushing... \(photoVC)")
+    }
 }

@@ -27,6 +27,12 @@ class PhotoViewControllerTests: XCTestCase {
         sut.photoInfo = (photoManager, 0)
     }
     
+    override func tearDown() {
+        sut = nil
+        photoManager = nil
+        photo = nil
+    }
+    
     func testSUT_IsNotNil() {
         XCTAssertNotNil(sut, "PhotoViewController should have been initialized")
     }

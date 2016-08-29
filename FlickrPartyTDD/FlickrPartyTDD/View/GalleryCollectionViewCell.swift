@@ -42,6 +42,15 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     
     func configCell(withItem item: Photo) {
         photo = item
+        
+        guard let data = NSData(contentsOfURL: item.thumbnailURL) else {
+            return
+        }
+        
+        guard let image = UIImage(data: data) else { return }
+        
+        imageView?.image = image
+        
     }
     
 }

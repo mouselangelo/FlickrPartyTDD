@@ -20,6 +20,11 @@ class FlickrAPIServiceTests: XCTestCase {
         sut.session = mockURLSession
     }
     
+    override func tearDown() {
+        sut = nil
+        mockURLSession = nil
+    }
+    
     func testSearch_MakesRequestFromTag() {
         let completion = { (json:String?, error: ErrorType?) in }
         sut.search("party", pageNumber: 1, completion: completion)

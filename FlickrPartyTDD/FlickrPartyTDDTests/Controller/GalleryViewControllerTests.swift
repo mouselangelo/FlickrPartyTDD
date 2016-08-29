@@ -19,6 +19,10 @@ class GalleryViewControllerTests: XCTestCase {
         sut.dataProvider!.photoManager = PhotoManager()
         _ = sut.view
     }
+    
+    override func tearDown() {
+        sut = nil
+    }
 
     func testAfterViewDidLoad_NavigationItem_HasTitleFlickrParty() {
         XCTAssertEqual(sut.navigationItem.title,
@@ -38,18 +42,14 @@ class GalleryViewControllerTests: XCTestCase {
     
     func testCollectionView_AfterViewDidLoad_ShouldHaveDelegate() {
         XCTAssertNotNil(sut.collectionView?.delegate, "Collection view delegate must be set")
-        XCTAssertTrue(sut.collectionView?.delegate is GalleryDataProvider)
-    }
-    
-    func testCollectionView_DelegateAndDataSource_ShouldBeSameInstance() {
-        XCTAssertEqual(sut.collectionView?.dataSource as? GalleryDataProvider, sut.collectionView?.delegate as? GalleryDataProvider, "DataSource and Delegate should be the same instance")
+        XCTAssertTrue(sut.collectionView?.delegate is GalleryViewController, "VC must be delegate")
     }
     
     func testGallertVC_DataProvider_HasPhotoManager() {
         XCTAssertNotNil(sut.dataProvider?.photoManager)
     }
     
-    func testPhotoSelectedNotification_PushedPhotoVC() {
+    func testOnPhotoSelected_PushedPhotoVC() {
         // use a mock NavigationViewController to verify
         let mockingNavigationController = MockNavigationController(rootViewController: sut)
         
@@ -58,10 +58,7 @@ class GalleryViewControllerTests: XCTestCase {
         
         _ = sut.view
         
-        NSNotificationCenter.defaultCenter().postNotificationName(
-            "PhotoSelectedNotification",
-            object: self,
-            userInfo: ["index" : 0])
+        sut.collectionView.delegate?.collectionView?(sut.collectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0))
         
         guard let photoVC = mockingNavigationController.pushedViewController as? PhotoViewController else {
             XCTFail("PhotoViewController should have been pushed")
@@ -90,6 +87,6 @@ extension GalleryViewControllerTests {
             pushedViewController = viewController
             super.pushViewController(viewController, animated: animated)
         }
-    }
     
+    }
 }

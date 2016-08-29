@@ -22,6 +22,10 @@ class PhotoManagerTests: XCTestCase {
         sut = PhotoManager()
     }
     
+    override func tearDown() {
+        sut = nil
+    }
+    
     func testPhotoManager_ReturnsCountOfPhotos() {
         XCTAssertEqual(sut.count, 0, "Initial count must be 0")
     }
@@ -108,6 +112,31 @@ class PhotoManagerTests: XCTestCase {
         waitForExpectationsWithTimeout(1, handler: nil)
     }
     
+    func testPhotoManager_OnSuccessfullyLoadingPhotos_FiresNotification() {
+        let mockLoader = MockPhotoLoader()
+        mockLoader.photosToReturn = generateItems(5)
+        let sut = PhotoManager(loader: mockLoader)
+        expectationForNotification(
+            PhotoManager.DataChangeNotificationName,
+            object: sut, handler: nil)
+        sut.loadPhotos()
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testPhotoManager_OnErrorLoadingPhotos_FiresNotification() {
+        let mockLoader = MockPhotoLoader()
+
+        let sut = PhotoManager(loader: mockLoader)
+        
+        expectationForNotification(
+            PhotoManager.NetworkCallFailedNotificationName,
+            object: sut, handler: nil)
+        sut.loadPhotos()
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    
+    
     
     private func generateItems(count:Int) -> [Photo] {
         var photos = [Photo]()
@@ -120,4 +149,20 @@ class PhotoManagerTests: XCTestCase {
         return photos
     }
     
+}
+
+extension PhotoManagerTests {
+    class MockPhotoLoader: PhotoLoader {
+        
+        var photosToReturn:[Photo]?
+        
+        func loadPhotos(completion: (result: [Photo]?, error: PhotoLoaderError?) -> Void) {
+            guard let photos = photosToReturn else {
+                completion(result: nil, error: PhotoLoaderError.NetworkCallFailed)
+                return
+            }
+            
+            completion(result: photos, error: nil)
+        }
+    }
 }

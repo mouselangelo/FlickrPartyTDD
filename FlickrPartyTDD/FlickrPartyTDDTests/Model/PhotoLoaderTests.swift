@@ -17,18 +17,20 @@ class PhotoLoaderTests: XCTestCase {
         sut = FlickrPhotoLoader(apiService: MockAPIService(), parser: FlickrResponseParser())
     }
     
+    override func tearDown() {
+        sut = nil
+    }
+    
     func testPhotoLoader_LoadsPhotos() {
-        let expectation = expectationWithDescription("LoadPhotosFromMock")
         sut.loadPhotos { (result, error) in
-            if let result = result {
-                print(result)
-                expectation.fulfill()
-            }
+            XCTAssertNotNil(result)
         }
-        waitForExpectationsWithTimeout(3, handler: nil)
     }
     
     func testPhotoLoader_WithoutMock_LoadsPhotos() {
+        if TestRunnerHelper.skipTestsWithNetworkCalls {
+            return
+        }
         let sut = FlickrPhotoLoader(apiService: FlickrAPIService(), parser: FlickrResponseParser())
         let expectation = expectationWithDescription("LoadPhotosfromAPI")
         sut.loadPhotos { (result, error) in
@@ -37,14 +39,33 @@ class PhotoLoaderTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(20, handler: nil)
-    }    
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testPhotoLoader_OnError_HandlesError() {
+        let sut = FlickrPhotoLoader(
+            apiService: MockAPIServiceWithError(),
+            parser: FlickrResponseParser())
+        let expectation = expectationWithDescription("PhotoLoader should return error")
+        sut.loadPhotos { (result, error) in
+            if let _ = error {
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }
 
 extension PhotoLoaderTests {
     class MockAPIService: FlickrAPIService {
         override func search(tag: String, pageNumber: Int, completion: Handler) {
             completion(result: PhotoLoaderTests.sampleResponse, error: nil)
+        }
+    }
+    
+    class MockAPIServiceWithError: FlickrAPIService {
+        override func search(tag: String, pageNumber: Int, completion: Handler) {
+            completion(result: nil, error: ServiceError.RequestFailed)
         }
     }
 }

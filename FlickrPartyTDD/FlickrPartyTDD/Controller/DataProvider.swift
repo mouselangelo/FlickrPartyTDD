@@ -8,7 +8,7 @@
 
 import UIKit
 /** Instances of conforming types can act as delegate and data source for UICollectionViews and can manage Photos */
-protocol CollectionViewDataProvider: UICollectionViewDataSource, UICollectionViewDelegate {
+protocol CollectionViewDataProvider: UICollectionViewDataSource {
     
     /** Ask the CollectionViewDataProvider to register the various UICollectionViewCell type identifiers that it is interested in. Conforming types will thus be able to deque these cells when required.*/
     func registerCellIdentifiers(collectionView: UICollectionView)

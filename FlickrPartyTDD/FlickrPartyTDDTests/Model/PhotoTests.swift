@@ -23,6 +23,10 @@ class PhotoTests: XCTestCase {
                     title: "Test Title")
     }
     
+    override func tearDown() {
+        sut = nil
+    }
+    
     func testPhoto_ShouldHaveURL() {
         XCTAssertNotNil(sut.url,
                         "URL is set")

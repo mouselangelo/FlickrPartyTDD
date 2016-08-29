@@ -11,6 +11,8 @@ import Foundation
 class PhotoManager {
     
     static let DataChangeNotificationName = "PhotoManagerDataChanged"
+    static let NetworkCallFailedNotificationName = "PhotoLoaderError.NetworkCallFailed"
+    
     
     private var loader: PhotoLoader?
     
@@ -29,16 +31,16 @@ class PhotoManager {
                 self.handleError(error)
                 return
             }
-            guard let result = result else {
-                self.handleError(nil)
-                return
-            }
+            guard let result = result else { return }
             self.addAll(result)
         }
     }
     
     private func handleError(error: PhotoLoaderError?) {
-        print("Error...")
+        NSNotificationCenter.defaultCenter().postNotificationName(
+            PhotoManager.NetworkCallFailedNotificationName,
+            object: self,
+            userInfo: nil)
     }
     
     private func dataChanged() {

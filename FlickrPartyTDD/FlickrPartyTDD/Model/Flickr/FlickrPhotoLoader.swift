@@ -12,11 +12,7 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
     
     private let apiService: FlickrAPIService
     private let parser: FlickrResponseParser
-    private lazy var queue: NSOperationQueue = {
-        let queue = NSOperationQueue()
-        queue.addObserver(self, forKeyPath: "operations", options: NSKeyValueObservingOptions.init(rawValue: 0), context: nil)
-        return queue
-    }()
+    private var queue: NSOperationQueue?
     
     private var completion: ((result:[Photo]?, error:PhotoLoaderError?) -> Void)?
     
@@ -33,7 +29,13 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
         startOperations()
     }
     
+    private func registerQueueKVO() {
+        queue?.addObserver(self, forKeyPath: "operations", options: NSKeyValueObservingOptions.init(rawValue: 0), context: nil)
+    }
+    
     private func startOperations() {
+        queue = NSOperationQueue()
+        registerQueueKVO()
         
         let downloadOperation = APIOperation(apiService: apiService)
         
@@ -43,6 +45,7 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
         
         let parseOperation = NSBlockOperation {
             guard let json = self.json else {
+                self.queue?.cancelAllOperations()
                 return
             }
             self.parser.parse(json) { (result, totalCount, error) in
@@ -54,27 +57,21 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
         
         parseOperation.addDependency(downloadOperation)
         
-        queue.addOperations([downloadOperation, parseOperation], waitUntilFinished: false)
+        queue?.addOperations([downloadOperation, parseOperation], waitUntilFinished: false)
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if object === self.queue && keyPath == "operations" {
-            print("Current Operations \(self.queue.operations.count)")
-            if self.queue.operations.count == 0 {
+            print("Current Operations \(self.queue?.operations.count)")
+            if self.queue?.operations.count == 0 {
                 self.onFinished()
             }
-        } else {
-            super.observeValueForKeyPath(keyPath,
-                                         ofObject: object,
-                                         change: change,
-                                         context: context)
-        }
+        } // else ignore
     }
     
     private func onFinished() {
-        guard let completion = completion else {
-            print("Completetion Handler not set?")
-            cleanup()
+        queue = nil
+        guard let completion = completion else { cleanup()
             return
         }
         NSOperationQueue.mainQueue().addOperationWithBlock {
@@ -119,6 +116,10 @@ extension FlickrPhotoLoader {
         
         override func main() {
             self.apiService.search("party", pageNumber: 1) { (result, error) in
+                guard error == nil else {
+                    self.state = .Finished
+                    return
+                }
                 if let result = result {
                     self.json = result
                     self.state = .Finished

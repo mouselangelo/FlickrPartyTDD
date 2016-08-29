@@ -17,6 +17,10 @@ class NavigationTests: XCTestCase {
         rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
     }
     
+    override func tearDown() {
+        rootViewController = nil
+    }
+    
     func testRootVC_IsNavigationViewController() {
         XCTAssertNotNil(rootViewController, "root VC should have been initialized")
         XCTAssertTrue(rootViewController is UINavigationController, "root VC should be a navigation controller")

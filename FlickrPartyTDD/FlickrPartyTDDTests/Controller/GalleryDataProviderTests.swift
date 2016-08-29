@@ -22,8 +22,13 @@ class GalleryDataProviderTests: XCTestCase {
         _ = galleryViewController.view
         collectionView = galleryViewController.collectionView
         collectionView.dataSource = sut
-        collectionView.delegate = sut
         sut.registerCellIdentifiers(collectionView)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        galleryViewController = nil
+        collectionView = nil
     }
     
     func testNumberOfSections_IsOne() {
@@ -69,7 +74,6 @@ class GalleryDataProviderTests: XCTestCase {
         let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: layout)
         
         collectionView.dataSource = sut
-        collectionView.delegate = sut
         sut.registerCellIdentifiers(collectionView)
         
         
@@ -90,7 +94,6 @@ class GalleryDataProviderTests: XCTestCase {
         let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: layout)
         
         collectionView.dataSource = mockDataProvider
-        collectionView.delegate = mockDataProvider
         mockDataProvider.registerCellIdentifiers(collectionView)
         
         let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! MockCell
@@ -108,7 +111,6 @@ class GalleryDataProviderTests: XCTestCase {
         let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: layout)
         
         collectionView.dataSource = mockDataProvider
-        collectionView.delegate = mockDataProvider
         mockDataProvider.registerCellIdentifiers(collectionView)
         
         let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! MockCell
@@ -119,21 +121,6 @@ class GalleryDataProviderTests: XCTestCase {
         XCTAssertEqual(cell.photo?.url, photo.url, "Cell should get configured with correct photo")
     }
     
-    
-    func testSelectingACell_SendsNotification() {
-        let phtoto = createPhoto(withId: 1)
-        sut.photoManager?.add(phtoto)
-        
-        expectationForNotification("PhotoSelectedNotification", object: nil) { (notification) -> Bool in
-            guard let index = notification.userInfo?["index"] as? Int else {
-                return false
-            }
-            return index == 0
-        }
-                
-        collectionView.delegate?.collectionView!(collectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0))
-        waitForExpectationsWithTimeout(3, handler: nil)
-    }
     
     func testDataProvider_OnDataChangeNotification_callsCollectionViewRealodData() {
         let layout = UICollectionViewFlowLayout()

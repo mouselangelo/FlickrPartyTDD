@@ -17,6 +17,10 @@ class FlickrResponseParserTests: XCTestCase {
         sut = FlickrResponseParser()
     }
     
+    override func tearDown() {
+        sut = nil
+    }
+    
     func testParser_WhenGivenInvalidJSON_ReturnsError() {
         sut.parse("This is not json") { (result, totalCount, error) in
             XCTAssertNotNil(error)
