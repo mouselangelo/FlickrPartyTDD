@@ -52,13 +52,6 @@
 			remoteGlobalIDString = 611FC57E1D7164F3001E7CA8;
 			remoteInfo = FlickrPartyTDD;
 		};
-		611FC59F1D7164F3001E7CA8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 611FC5771D7164F2001E7CA8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 611FC57E1D7164F3001E7CA8;
-			remoteInfo = FlickrPartyTDD;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -69,8 +62,6 @@
 		611FC58E1D7164F3001E7CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		611FC5931D7164F3001E7CA8 /* FlickrPartyTDDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrPartyTDDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		611FC5991D7164F3001E7CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		611FC59E1D7164F3001E7CA8 /* FlickrPartyTDDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrPartyTDDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		611FC5A41D7164F3001E7CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61622B9D1D7476E200D3336E /* ConcurrentOpertion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentOpertion.swift; path = Model/ConcurrentOpertion.swift; sourceTree = "<group>"; };
 		616428DF1D75B5820022B653 /* sample_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_response.json; sourceTree = "<group>"; };
 		6164CE121D7494BA00A63277 /* TestRunnerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRunnerHelper.swift; sourceTree = "<group>"; };
@@ -122,13 +113,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		611FC59B1D7164F3001E7CA8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -138,8 +122,6 @@
 				61F789151D74B86300CF8203 /* Frameworks */,
 				611FC5811D7164F3001E7CA8 /* FlickrPartyTDD */,
 				611FC5961D7164F3001E7CA8 /* FlickrPartyTDDTests */,
-				61AC007A1D71EECB00CDC420 /* Utils */,
-				611FC5A11D7164F3001E7CA8 /* FlickrPartyTDDUITests */,
 				611FC5801D7164F3001E7CA8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,7 +131,6 @@
 			children = (
 				611FC57F1D7164F3001E7CA8 /* FlickrPartyTDD.app */,
 				611FC5931D7164F3001E7CA8 /* FlickrPartyTDDTests.xctest */,
-				611FC59E1D7164F3001E7CA8 /* FlickrPartyTDDUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,16 +159,9 @@
 				61E1FFFB1D72D82400F516ED /* View */,
 				6164CE121D7494BA00A63277 /* TestRunnerHelper.swift */,
 				616428DF1D75B5820022B653 /* sample_response.json */,
+				61AC007A1D71EECB00CDC420 /* Utils */,
 			);
 			path = FlickrPartyTDDTests;
-			sourceTree = "<group>";
-		};
-		611FC5A11D7164F3001E7CA8 /* FlickrPartyTDDUITests */ = {
-			isa = PBXGroup;
-			children = (
-				611FC5A41D7164F3001E7CA8 /* Info.plist */,
-			);
-			path = FlickrPartyTDDUITests;
 			sourceTree = "<group>";
 		};
 		61839F4D1D7178BE00B74067 /* Model */ = {
@@ -218,7 +192,6 @@
 				61AC00781D71EEC400CDC420 /* Mocks.swift */,
 			);
 			name = Utils;
-			path = FlickrPartyTDDTests;
 			sourceTree = "<group>";
 		};
 		61AC007F1D72005800CDC420 /* Flickr */ = {
@@ -339,24 +312,6 @@
 			productReference = 611FC5931D7164F3001E7CA8 /* FlickrPartyTDDTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		611FC59D1D7164F3001E7CA8 /* FlickrPartyTDDUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 611FC5AD1D7164F3001E7CA8 /* Build configuration list for PBXNativeTarget "FlickrPartyTDDUITests" */;
-			buildPhases = (
-				611FC59A1D7164F3001E7CA8 /* Sources */,
-				611FC59B1D7164F3001E7CA8 /* Frameworks */,
-				611FC59C1D7164F3001E7CA8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				611FC5A01D7164F3001E7CA8 /* PBXTargetDependency */,
-			);
-			name = FlickrPartyTDDUITests;
-			productName = FlickrPartyTDDUITests;
-			productReference = 611FC59E1D7164F3001E7CA8 /* FlickrPartyTDDUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -371,10 +326,6 @@
 						CreatedOnToolsVersion = 7.3.1;
 					};
 					611FC5921D7164F3001E7CA8 = {
-						CreatedOnToolsVersion = 7.3.1;
-						TestTargetID = 611FC57E1D7164F3001E7CA8;
-					};
-					611FC59D1D7164F3001E7CA8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						TestTargetID = 611FC57E1D7164F3001E7CA8;
 					};
@@ -395,7 +346,6 @@
 			targets = (
 				611FC57E1D7164F3001E7CA8 /* FlickrPartyTDD */,
 				611FC5921D7164F3001E7CA8 /* FlickrPartyTDDTests */,
-				611FC59D1D7164F3001E7CA8 /* FlickrPartyTDDUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -415,13 +365,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				616428E01D75B5820022B653 /* sample_response.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		611FC59C1D7164F3001E7CA8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,13 +433,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		611FC59A1D7164F3001E7CA8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -504,11 +440,6 @@
 			isa = PBXTargetDependency;
 			target = 611FC57E1D7164F3001E7CA8 /* FlickrPartyTDD */;
 			targetProxy = 611FC5941D7164F3001E7CA8 /* PBXContainerItemProxy */;
-		};
-		611FC5A01D7164F3001E7CA8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 611FC57E1D7164F3001E7CA8 /* FlickrPartyTDD */;
-			targetProxy = 611FC59F1D7164F3001E7CA8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -666,31 +597,6 @@
 			};
 			name = Release;
 		};
-		611FC5AE1D7164F3001E7CA8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = FlickrPartyTDDUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.deuxlapins.FlickrPartyTDDUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_TARGET_NAME = FlickrPartyTDD;
-			};
-			name = Debug;
-		};
-		611FC5AF1D7164F3001E7CA8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = FlickrPartyTDDUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.deuxlapins.FlickrPartyTDDUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = FlickrPartyTDD;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -717,15 +623,6 @@
 			buildConfigurations = (
 				611FC5AB1D7164F3001E7CA8 /* Debug */,
 				611FC5AC1D7164F3001E7CA8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		611FC5AD1D7164F3001E7CA8 /* Build configuration list for PBXNativeTarget "FlickrPartyTDDUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				611FC5AE1D7164F3001E7CA8 /* Debug */,
-				611FC5AF1D7164F3001E7CA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
