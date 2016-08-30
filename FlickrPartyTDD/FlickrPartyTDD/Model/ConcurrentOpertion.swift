@@ -9,9 +9,9 @@
 import Foundation
 
 class ConcurrentOpertion: NSOperation {
-    
+
     // MARK: - Types
-    
+
     enum State {
         case Ready, Executing, Finished
         func keyPath() -> String {
@@ -25,9 +25,9 @@ class ConcurrentOpertion: NSOperation {
             }
         }
     }
-    
+
     // MARK: - Properties
-    
+
     var state = State.Ready {
         willSet {
             willChangeValueForKey(newValue.keyPath())
@@ -38,21 +38,21 @@ class ConcurrentOpertion: NSOperation {
             didChangeValueForKey(state.keyPath())
         }
     }
-    
+
     // MARK: - NSOperation
-    
+
     override var ready: Bool {
         return super.ready && state == .Ready
     }
-    
+
     override var executing: Bool {
         return state == .Executing
     }
-    
+
     override var finished: Bool {
         return state == .Finished
     }
-    
+
     override var asynchronous: Bool {
         return true
     }

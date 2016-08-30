@@ -12,14 +12,14 @@ import Foundation
  Types must conform to this protocol, to be displayable in the gallery
  */
 protocol Photo {
-    
+
     /** URL to the full image */
     var url: NSURL { get }
-    
+
     /** URL to the thumbnail image */
     var thumbnailURL: NSURL { get }
-    
+
     /** Optional title */
     var title: String? { get }
-    
+
 }

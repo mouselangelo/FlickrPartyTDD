@@ -15,8 +15,8 @@ class PhotoItem: Photo {
     let url: NSURL
     let thumbnailURL: NSURL
     let title: String?
-    
-    
+
+
     init(url: NSURL, thumbnailURL: NSURL, title: String? = nil) {
         self.url = url
         self.thumbnailURL = thumbnailURL

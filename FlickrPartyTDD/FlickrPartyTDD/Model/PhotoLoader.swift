@@ -14,7 +14,9 @@ struct PhotoResponse {
 }
 
 protocol PhotoLoader {
-    func loadPhotos(page:Int, completion: (result: PhotoResponse?, error:PhotoLoaderError?) -> Void)
+    func loadPhotos(
+        page: Int,
+        completion: (result: PhotoResponse?, error: PhotoLoaderError?) -> Void)
 }
 
 enum PhotoLoaderError: ErrorType {
