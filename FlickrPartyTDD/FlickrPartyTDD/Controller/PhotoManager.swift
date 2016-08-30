@@ -107,6 +107,8 @@ class PhotoManager {
      Removes all Photos
      */
     func removeAll() {
+        currentPage = 1
+        lastFetchedPage = 0
         photos.removeAll()
         dataChanged()
     }
