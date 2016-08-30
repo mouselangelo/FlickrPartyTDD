@@ -59,7 +59,7 @@ class FlickrAPIService {
                 completion(result: nil, error: ServiceError.InvalidResponse)
                 return
             }
-            print("Result : \(result)")
+          //  print("Result : \(result)")
             completion(result: result, error: nil)
         }
     }
@@ -118,7 +118,7 @@ class FlickrAPIService {
  */
 extension FlickrAPIService {
     struct  Config {
-        private let applicationKey = "c9310f15478b2643a293d2ae60d38a98"//"USE_YOUR_OWN_API_KEY_HERE"
+        private let applicationKey = //"USE_YOUR_OWN_API_KEY_HERE"
         private let apiEndpoint = "https://api.flickr.com/services/rest/"
         private let searchMethod = "flickr.photos.search"
         private let defaultMediaType = "photos"

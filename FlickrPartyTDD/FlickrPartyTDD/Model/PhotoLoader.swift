@@ -8,8 +8,13 @@
 
 import Foundation
 
+struct PhotoResponse {
+    var photos: [Photo]
+    var totalCount: Int
+}
+
 protocol PhotoLoader {
-    func loadPhotos(completion: (result:[Photo]?, error:PhotoLoaderError?) -> Void)
+    func loadPhotos(page:Int, completion: (result: PhotoResponse?, error:PhotoLoaderError?) -> Void)
 }
 
 enum PhotoLoaderError: ErrorType {

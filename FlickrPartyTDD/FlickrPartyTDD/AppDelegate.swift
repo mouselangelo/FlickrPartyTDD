@@ -10,11 +10,16 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow? = UIWindow(frame: UIScreen.mainScreen().bounds)
-
+    
+    let reachabilityManager: ReachabilityManager = DefaultReachabilityManager.sharedInstance
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
+        print("Reachability: \(reachabilityManager.currentState)")
+        
+        
         setupInitialViewController()
         window?.makeKeyAndVisible()
         return true
@@ -25,7 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // the initial viewController to be displayed
         let viewController = GalleryViewController()
-
+        
+        viewController.config = DefaultCollectionViewConfig()
+        viewController.reachabilityManager = reachabilityManager
+        
         let apiService = FlickrAPIService()
         let parser = FlickrResponseParser()
         let loader = FlickrPhotoLoader(apiService: apiService, parser: parser)
@@ -41,5 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = navigationController
     }
+    
+ 
+    
 }
 

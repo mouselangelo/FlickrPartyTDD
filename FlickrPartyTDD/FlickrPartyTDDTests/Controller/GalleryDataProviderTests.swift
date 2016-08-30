@@ -36,16 +36,17 @@ class GalleryDataProviderTests: XCTestCase {
         XCTAssertEqual(sections, 1, "Collection view has 1 section")
     }
     
-    func testNumberOfItemsInSectionOne_IsCountOfPhotos() {
+    // DataProvider returns one extra item (LoadMore/Refresh)
+    func testNumberOfItemsInSectionOne_IsCountOfPhotosPlusOne() {
         let photos = generateItems(5)
         sut.photoManager?.addAll(photos)
-        XCTAssertEqual(collectionView.numberOfItemsInSection(0), 5, "Should contain same items as added (5) ")
+        XCTAssertEqual(collectionView.numberOfItemsInSection(0), 6, "Should contain same items as added (5) + 1")
         
         sut.photoManager?.add(createPhoto(withId: 6))
         collectionView.reloadData()
-        XCTAssertEqual(collectionView.numberOfItemsInSection(0), 6, "Should contain same items as added (6) ")
+        XCTAssertEqual(collectionView.numberOfItemsInSection(0), 7, "Should contain same items as added (6) + 1 ")
     }
-
+    
     func testCellForItem_ReturnsGalleryCollectionViewCell() {
         
         let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: UICollectionViewFlowLayout())
@@ -64,6 +65,54 @@ class GalleryDataProviderTests: XCTestCase {
         
         XCTAssertNotNil(cell, "Cell should have been created")
         XCTAssertTrue(cell is GalleryCollectionViewCell, "Cell should be of type GalleryCollectionViewCell")
+    }
+    
+    func testCellForItem_ReturnsLoadMoreCell() {
+        
+        let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: UICollectionViewFlowLayout())
+        
+        collectionView.dataSource = sut
+        sut.registerCellIdentifiers(collectionView)
+        
+        
+        let photo = createPhoto(withId: 1)
+        
+        sut.photoManager?.add(photo)
+        collectionView.reloadData()
+        
+        let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0))
+        
+        XCTAssertNotNil(cell, "Cell should have been created")
+        XCTAssertTrue(cell is LoadMoreCollectionViewCell, "Cell should be of type LoadMoreCollectionViewCell")
+    }
+    
+    func testCellForItem_OnNoNetworkReturnsRefreshCell() {
+        
+        let collectionView = MockCollectionView(frame: CGRectMake(0, 0, 320, 480), collectionViewLayout: UICollectionViewFlowLayout())
+        
+        let sut = GalleryDataProvider()
+        let photoManager = PhotoManager()
+        sut.photoManager = photoManager
+        
+        collectionView.dataSource = sut
+        
+        sut.registerCellIdentifiers(collectionView)
+        
+        let mockReachabilityManager = MmckReachabilityManager()
+
+        sut.onReachabilityChanged(NSNotification(name: "", object: mockReachabilityManager))
+
+        
+        let photo = createPhoto(withId: 1)
+        
+        sut.photoManager?.add(photo)
+        
+        collectionView.reloadData()
+        
+        let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0))
+        
+        XCTAssertNotNil(cell, "Cell should have been created")
+        XCTAssertTrue(cell is RefreshCollectionViewCell, "Cell should be of type RefreshCollectionViewCell")
     }
     
     func testCellGetsDequed() {
@@ -219,6 +268,16 @@ extension GalleryDataProviderTests {
         override func loadPhotos() {
             loadPhotosCalled = true
             super.loadPhotos()
+        }
+    }
+    
+    class MmckReachabilityManager: NSObject, ReachabilityManager {
+        var currentState: NetworkState = .UnReachable
+        func stopListeningForNetworkNotifications(listener: ReachabilityListener) {
+            // ignore
+        }
+        func startListeningForNetworkNotifications(listener: ReachabilityListener) {
+            // ignore
         }
     }
 }

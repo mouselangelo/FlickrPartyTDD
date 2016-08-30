@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GalleryCollectionViewCell: UICollectionViewCell {
 
@@ -25,7 +26,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }
     
     func baseInit() {
-        backgroundColor = UIColor.blueColor()
+        backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         // initialize the imageView
         imageView = UIImageView()
         
@@ -42,15 +43,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     
     func configCell(withItem item: Photo) {
         photo = item
-        
-        guard let data = NSData(contentsOfURL: item.thumbnailURL) else {
-            return
-        }
-        
-        guard let image = UIImage(data: data) else { return }
-        
-        imageView?.image = image
-        
+        imageView?.kf_setImageWithURL(item.thumbnailURL)
     }
     
 }

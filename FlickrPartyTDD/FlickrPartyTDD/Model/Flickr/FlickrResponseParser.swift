@@ -22,7 +22,7 @@ class FlickrResponseParser {
         
         if let total = result[JSONKeys.total] as? String {
             resultTotalCount = Int(total) ?? 0
-            print("Total Results \(resultTotalCount)")
+            // print("Total Results \(resultTotalCount)")
         }
         
         guard let photoArray = result[JSONKeys.photo] as? [AnyObject] else { invalidJSON(handler); return }

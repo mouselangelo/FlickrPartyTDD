@@ -22,7 +22,7 @@ class PhotoLoaderTests: XCTestCase {
     }
     
     func testPhotoLoader_LoadsPhotos() {
-        sut.loadPhotos { (result, error) in
+        sut.loadPhotos(1) { (result, error) in
             XCTAssertNotNil(result)
         }
     }
@@ -33,7 +33,7 @@ class PhotoLoaderTests: XCTestCase {
         }
         let sut = FlickrPhotoLoader(apiService: FlickrAPIService(), parser: FlickrResponseParser())
         let expectation = expectationWithDescription("LoadPhotosfromAPI")
-        sut.loadPhotos { (result, error) in
+        sut.loadPhotos(1) { (result, error) in
             if let result = result {
                 print(result)
                 expectation.fulfill()

@@ -19,8 +19,8 @@ class PhotoViewControllerTests: XCTestCase {
         sut = PhotoViewController()
         _ = sut.view
         photoManager = PhotoManager()
-        let testURL = NSURL(string: "http://example.com")!
-        photo = PhotoItem(url: testURL, thumbnailURL: testURL, title: "Photo Title")
+
+        photo = createPhotoWithSampleItem()
         
         photoManager.add(photo)
         
@@ -117,4 +117,38 @@ class PhotoViewControllerTests: XCTestCase {
         XCTAssertEqual(sutTitle, expectedTitle, "NavigationItem title should match photo's title")
     }
     
+    func testSUTAfterViewWillAppear_ImageView_HasImage() {
+        if TestRunnerHelper.skipTestsWithNetworkCalls {
+            return
+        }
+        // force calling viewWillAppear
+        sut.beginAppearanceTransition(true, animated: true)
+        sut.endAppearanceTransition()
+        
+        let exists = NSPredicate(format: "image != nil")
+        
+        expectationForPredicate(exists,
+                                evaluatedWithObject: sut.imageView!, handler: nil)
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testPhotoVC_OnViewDidLoade_HasUiActivityIndicator() {
+        XCTAssertNotNil(sut.activityIndicator, "Indicator should be initialized")
+    }
+    
+}
+extension PhotoViewControllerTests {
+    func createPhotoWithSampleItem() -> Photo {
+        let thumbnail = NSURL(string: "https://farm9.staticflickr.com/8138/29236520941_1d41653aed_q.jpg")!
+        let url = NSURL(string: "https://farm9.staticflickr.com/8138/29236520941_1d41653aed.jpg")!
+        let title = "Sample Photo"
+        
+        let photo = PhotoItem(
+            url: url,
+            thumbnailURL: thumbnail,
+            title: title)
+        
+        return photo
+    }
 }

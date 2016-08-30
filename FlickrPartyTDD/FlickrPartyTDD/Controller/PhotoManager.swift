@@ -13,12 +13,18 @@ class PhotoManager {
     static let DataChangeNotificationName = "PhotoManagerDataChanged"
     static let NetworkCallFailedNotificationName = "PhotoLoaderError.NetworkCallFailed"
     
+    private var currentPage = 1
+    private var lastFetchedPage = 0
+    private var lastFetchFailed = false
     
     private var loader: PhotoLoader?
     
     private var photos = [Photo]()
     
+    private (set) var hasMore = true
+    
     init() {
+        self.loader = nil
     }
     
     init(loader: PhotoLoader) {
@@ -26,13 +32,37 @@ class PhotoManager {
     }
     
     func loadPhotos() {
-        loader?.loadPhotos { (result, error) in
+        print("loadPhotos() currentPage : \(currentPage), lastFeteched: \(lastFetchedPage)")
+
+        loader?.loadPhotos(currentPage, completion: { (result, error) in
             guard error == nil else {
+                self.lastFetchFailed = true
+                self.currentPage = self.lastFetchedPage
                 self.handleError(error)
                 return
             }
             guard let result = result else { return }
-            self.addAll(result)
+            self.lastFetchedPage = self.currentPage
+            print("loadFinished() currentPage : \(self.currentPage), lastFeteched: \(self.lastFetchedPage)")
+            self.addAll(result.photos)
+            self.hasMore = self.count < result.totalCount
+        })
+    }
+    
+    func loadMore() {
+        if currentPage == lastFetchedPage + 1 {
+            print("already loading... ignoring...")
+            return
+        }
+        print("loadMore() currentPage : \(currentPage), lastFeteched: \(lastFetchedPage)")
+        currentPage = lastFetchedPage + 1
+        loadPhotos()
+    }
+    
+    func resume() {
+        if lastFetchFailed {
+            lastFetchFailed = false
+            loadMore()
         }
     }
     

@@ -58,6 +58,9 @@ class GalleryViewControllerTests: XCTestCase {
         
         _ = sut.view
         
+        let photo = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!)
+        sut.dataProvider?.photoManager?.add(photo)
+        
         sut.collectionView.delegate?.collectionView?(sut.collectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0))
         
         guard let photoVC = mockingNavigationController.pushedViewController as? PhotoViewController else {

@@ -156,13 +156,14 @@ extension PhotoManagerTests {
         
         var photosToReturn:[Photo]?
         
-        func loadPhotos(completion: (result: [Photo]?, error: PhotoLoaderError?) -> Void) {
+        func loadPhotos(page: Int, completion: (result: PhotoResponse?, error: PhotoLoaderError?) -> Void) {
             guard let photos = photosToReturn else {
                 completion(result: nil, error: PhotoLoaderError.NetworkCallFailed)
                 return
             }
             
-            completion(result: photos, error: nil)
+            let response = PhotoResponse(photos: photos, totalCount: 100)
+            completion(result: response, error: nil)
         }
     }
 }

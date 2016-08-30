@@ -36,6 +36,11 @@
 		61E1FFFA1D72D4ED00F516ED /* GalleryCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFF91D72D4ED00F516ED /* GalleryCollectionViewCellTests.swift */; };
 		61E1FFFD1D72D9F800F516ED /* PhotoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFFC1D72D9F800F516ED /* PhotoViewControllerTests.swift */; };
 		61E1FFFF1D72DA4D00F516ED /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E1FFFE1D72DA4D00F516ED /* PhotoViewController.swift */; };
+		61F789131D74B7D800CF8203 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F789121D74B7D800CF8203 /* Kingfisher.framework */; };
+		61F789171D74CA4A00CF8203 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F789161D74CA4A00CF8203 /* Reachability.framework */; };
+		61F789191D75600600CF8203 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F789181D75600600CF8203 /* ReachabilityManager.swift */; };
+		61F7891B1D75789900CF8203 /* LoadMoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F7891A1D75789900CF8203 /* LoadMoreCollectionViewCell.swift */; };
+		61F7891D1D7578B600CF8203 /* RefreshCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F7891C1D7578B600CF8203 /* RefreshCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +96,11 @@
 		61E1FFF91D72D4ED00F516ED /* GalleryCollectionViewCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryCollectionViewCellTests.swift; path = View/GalleryCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		61E1FFFC1D72D9F800F516ED /* PhotoViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewControllerTests.swift; path = Controller/PhotoViewControllerTests.swift; sourceTree = "<group>"; };
 		61E1FFFE1D72DA4D00F516ED /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = Controller/PhotoViewController.swift; sourceTree = "<group>"; };
+		61F789121D74B7D800CF8203 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		61F789161D74CA4A00CF8203 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		61F789181D75600600CF8203 /* ReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReachabilityManager.swift; path = Util/ReachabilityManager.swift; sourceTree = "<group>"; };
+		61F7891A1D75789900CF8203 /* LoadMoreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadMoreCollectionViewCell.swift; path = View/LoadMoreCollectionViewCell.swift; sourceTree = "<group>"; };
+		61F7891C1D7578B600CF8203 /* RefreshCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RefreshCollectionViewCell.swift; path = View/RefreshCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61F789131D74B7D800CF8203 /* Kingfisher.framework in Frameworks */,
+				61F789171D74CA4A00CF8203 /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +133,7 @@
 		611FC5761D7164F2001E7CA8 = {
 			isa = PBXGroup;
 			children = (
+				61F789151D74B86300CF8203 /* Frameworks */,
 				611FC5811D7164F3001E7CA8 /* FlickrPartyTDD */,
 				611FC5961D7164F3001E7CA8 /* FlickrPartyTDDTests */,
 				61AC007A1D71EECB00CDC420 /* Utils */,
@@ -252,6 +265,8 @@
 			isa = PBXGroup;
 			children = (
 				61E1FFF11D721FE400F516ED /* GalleryCollectionViewCell.swift */,
+				61F7891A1D75789900CF8203 /* LoadMoreCollectionViewCell.swift */,
+				61F7891C1D7578B600CF8203 /* RefreshCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -260,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				61E1FFF61D72D3CA00F516ED /* Extensions.swift */,
+				61F789181D75600600CF8203 /* ReachabilityManager.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -272,6 +288,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		61F789151D74B86300CF8203 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61F789161D74CA4A00CF8203 /* Reachability.framework */,
+				61F789121D74B7D800CF8203 /* Kingfisher.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -282,6 +307,7 @@
 				611FC57B1D7164F3001E7CA8 /* Sources */,
 				611FC57C1D7164F3001E7CA8 /* Frameworks */,
 				611FC57D1D7164F3001E7CA8 /* Resources */,
+				61F789141D74B7EC00CF8203 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -397,11 +423,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		61F789141D74B7EC00CF8203 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)//Carthage/Build/iOS/Reachability.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		611FC57B1D7164F3001E7CA8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61F789191D75600600CF8203 /* ReachabilityManager.swift in Sources */,
 				61AC00841D7209B400CDC420 /* GalleryViewController.swift in Sources */,
 				61622B9E1D7476E200D3336E /* ConcurrentOpertion.swift in Sources */,
 				61E1004B1D743D6B00F516ED /* PhotoLoader.swift in Sources */,
@@ -409,6 +454,7 @@
 				61AC008C1D720DFC00CDC420 /* GalleryDataProvider.swift in Sources */,
 				61E1003F1D7439B900F516ED /* FlickrAPIService.swift in Sources */,
 				61E1FFF51D72260E00F516ED /* DataProvider.swift in Sources */,
+				61F7891D1D7578B600CF8203 /* RefreshCollectionViewCell.swift in Sources */,
 				61E1004D1D743D7500F516ED /* FlickrPhotoLoader.swift in Sources */,
 				61839F591D71975000B74067 /* Photo.swift in Sources */,
 				61E1FFFF1D72DA4D00F516ED /* PhotoViewController.swift in Sources */,
@@ -416,6 +462,7 @@
 				61E100401D7439B900F516ED /* FlickrResponseParser.swift in Sources */,
 				61E1FFF21D721FE400F516ED /* GalleryCollectionViewCell.swift in Sources */,
 				61E1FFF71D72D3CA00F516ED /* Extensions.swift in Sources */,
+				61F7891B1D75789900CF8203 /* LoadMoreCollectionViewCell.swift in Sources */,
 				61839F5A1D71975000B74067 /* PhotoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -560,6 +607,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FlickrPartyTDD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -572,6 +623,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FlickrPartyTDD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

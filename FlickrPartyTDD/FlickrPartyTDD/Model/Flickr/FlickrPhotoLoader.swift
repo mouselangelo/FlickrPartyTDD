@@ -14,30 +14,31 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
     private let parser: FlickrResponseParser
     private var queue: NSOperationQueue?
     
-    private var completion: ((result:[Photo]?, error:PhotoLoaderError?) -> Void)?
+    private var completion: ((result:PhotoResponse?, error:PhotoLoaderError?) -> Void)?
     
-    private var json:String?
-    private var data:[Photo]?
+    private var json: String?
+    private var data: PhotoResponse?
     
     init(apiService: FlickrAPIService, parser: FlickrResponseParser) {
         self.apiService = apiService
         self.parser = parser
     }
     
-    func loadPhotos(completion: (result:[Photo]?, error:PhotoLoaderError?) -> Void) {
+    func loadPhotos(page: Int = 1, completion: (result: PhotoResponse?, error: PhotoLoaderError?) -> Void) {
         self.completion = completion
-        startOperations()
+        startOperations(page)
+
     }
     
     private func registerQueueKVO() {
         queue?.addObserver(self, forKeyPath: "operations", options: NSKeyValueObservingOptions.init(rawValue: 0), context: nil)
     }
     
-    private func startOperations() {
+    private func startOperations(page: Int) {
         queue = NSOperationQueue()
         registerQueueKVO()
         
-        let downloadOperation = APIOperation(apiService: apiService)
+        let downloadOperation = APIOperation(apiService: apiService, page: page)
         
         downloadOperation.completionBlock = {
             self.json = downloadOperation.json
@@ -50,7 +51,7 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
             }
             self.parser.parse(json) { (result, totalCount, error) in
                 if let result = result {
-                    self.data = result
+                    self.data = PhotoResponse(photos: result, totalCount: totalCount)
                 }
             }
         }
@@ -62,7 +63,7 @@ class FlickrPhotoLoader: NSObject, PhotoLoader {
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if object === self.queue && keyPath == "operations" {
-            print("Current Operations \(self.queue?.operations.count)")
+            //print("Current Operations \(self.queue?.operations.count)")
             if self.queue?.operations.count == 0 {
                 self.onFinished()
             }
@@ -97,13 +98,13 @@ extension FlickrPhotoLoader {
     class APIOperation: ConcurrentOpertion {
         
         let apiService:FlickrAPIService
+        private var page:Int
         var json:String?
         
-        init(apiService: FlickrAPIService) {
+        init(apiService: FlickrAPIService, page:Int = 1) {
             self.apiService = apiService
+            self.page = page
         }
-        
-        
         
         override func start() {
             if cancelled {
@@ -115,7 +116,7 @@ extension FlickrPhotoLoader {
         }
         
         override func main() {
-            self.apiService.search("party", pageNumber: 1) { (result, error) in
+            self.apiService.search("party", pageNumber: page) { (result, error) in
                 guard error == nil else {
                     self.state = .Finished
                     return

@@ -23,4 +23,5 @@ protocol PhotoManageable {
 
 /** Instances of conforming types can use PhotoManager to manage Photos and act as Delegate and Data source for UICollectionView */
 protocol PhotoDataProvider: CollectionViewDataProvider, PhotoManageable {
+    var photoCount: Int { get }
 }
