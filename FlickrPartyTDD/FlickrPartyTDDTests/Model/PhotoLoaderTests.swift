@@ -32,7 +32,8 @@ class PhotoLoaderTests: XCTestCase {
             return
         }
         let sut = FlickrPhotoLoader(apiService: FlickrAPIService(), parser: FlickrResponseParser())
-        let expectation = expectationWithDescription("LoadPhotosfromAPI")
+        let expectation =
+            expectationWithDescription("Load Photos from API (When network available)")
         sut.loadPhotos(1) { (result, error) in
             if let result = result {
                 print(result)

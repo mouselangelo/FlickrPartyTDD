@@ -79,9 +79,19 @@ class GalleryDataProviderTests: XCTestCase {
             MockCollectionView(frame: CGRect(x: 0, y: 0, width: 320, height: 480),
                                collectionViewLayout: UICollectionViewFlowLayout())
 
+        let sut = GalleryDataProvider()
+        let photoManager = PhotoManager()
+        sut.photoManager = photoManager
+
         collectionView.dataSource = sut
+
         sut.registerCellIdentifiers(collectionView)
 
+        let mockReachabilityManager = MockReachabilityManager()
+
+        mockReachabilityManager.networkStateToReturn = true
+
+        sut.onReachabilityChanged(NSNotification(name: "", object: mockReachabilityManager))
 
         let photo = createPhoto(withId: 1)
 
@@ -314,10 +324,10 @@ extension GalleryDataProviderTests {
 
     class MockReachabilityManager: NSObject, ReachabilityManager {
 
-        var currentState: NetworkState = .UnReachable
+        var networkStateToReturn: Bool = false
 
         var isReachable: Bool {
-            return currentState == .Reachable
+            return networkStateToReturn
         }
 
         func stopListeningForNetworkNotifications(listener: ReachabilityListener) {
