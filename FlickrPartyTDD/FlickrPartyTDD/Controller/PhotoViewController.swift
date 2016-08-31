@@ -11,8 +11,6 @@ import Kingfisher
 
 class PhotoViewController: UIViewController, ReachabilityListener {
 
-    typealias PhotoInfo = (PhotoManager, Int)
-
     private let config = ScrollConfig()
 
     var reachabilityManager: ReachabilityManager?
@@ -20,7 +18,8 @@ class PhotoViewController: UIViewController, ReachabilityListener {
 
     var scrollView: UIScrollView?
     var imageView: UIImageView?
-    var photoInfo: PhotoInfo?
+
+    var photo: Photo?
     var activityIndicator: UIActivityIndicatorView?
 
     override func viewDidLoad() {
@@ -41,22 +40,20 @@ class PhotoViewController: UIViewController, ReachabilityListener {
     private func checkForReachability() {
         guard let reachabilityManager = reachabilityManager else { return }
 
-        print(reachabilityManager.currentState)
-
-        guard reachabilityManager.currentState == .UnReachable else {
-            if let _ = networkAlertController {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.networkAlertController = nil
-            }
-            if imageView?.image == nil {
-                updateView()
-            }
+        guard reachabilityManager.isReachable else {
+            networkAlertController = showNoANetworAlert({
+                print("User tapped retry...")
+                self.checkForReachability()
+            })
             return
         }
-        networkAlertController = showNoANetworAlert({
-            print("User tapped retry...")
-            self.checkForReachability()
-        })
+        if let _ = networkAlertController {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.networkAlertController = nil
+        }
+        if imageView?.image == nil {
+            updateView()
+        }
     }
 
     func onReachabilityChanged(notification: NSNotification) {
@@ -103,9 +100,9 @@ class PhotoViewController: UIViewController, ReachabilityListener {
 
     private func updateView() {
         // set the title of the navigation item
-        guard let info = photoInfo else { return }
+        //guard let info = photoInfo else { return }
 
-        guard let photo = info.0.itemAtIndex(info.1) else { return }
+        guard let photo = photo else { return }
 
         self.activityIndicator?.startAnimating()
         self.activityIndicator?.hidden = false

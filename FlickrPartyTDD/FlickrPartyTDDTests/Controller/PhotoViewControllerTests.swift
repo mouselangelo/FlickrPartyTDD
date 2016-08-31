@@ -12,24 +12,17 @@ import XCTest
 class PhotoViewControllerTests: XCTestCase {
 
     var sut: PhotoViewController!
-    var photoManager: PhotoManager!
     var photo: Photo!
 
     override func setUp() {
         sut = PhotoViewController()
         _ = sut.view
-        photoManager = PhotoManager()
-
         photo = createPhotoWithSampleItem()
-
-        photoManager.add(photo)
-
-        sut.photoInfo = (photoManager, 0)
+        sut.photo = photo
     }
 
     override func tearDown() {
         sut = nil
-        photoManager = nil
         photo = nil
     }
 
@@ -37,8 +30,8 @@ class PhotoViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut, "PhotoViewController should have been initialized")
     }
 
-    func testPhotoPhotoInfoIsSet() {
-        XCTAssertNotNil(sut.photoInfo, "PhotoInfo must be set")
+    func testPhotoVCPhotoIsSet() {
+        XCTAssertNotNil(sut.photo, "Photo must be set")
     }
 
     func testAfterViewDidLoad_ScrollViewIsSet() {

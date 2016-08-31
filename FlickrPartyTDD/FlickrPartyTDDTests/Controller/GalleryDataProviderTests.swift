@@ -109,7 +109,7 @@ class GalleryDataProviderTests: XCTestCase {
 
         sut.registerCellIdentifiers(collectionView)
 
-        let mockReachabilityManager = MmckReachabilityManager()
+        let mockReachabilityManager = MockReachabilityManager()
 
         sut.onReachabilityChanged(NSNotification(name: "", object: mockReachabilityManager))
 
@@ -193,7 +193,8 @@ class GalleryDataProviderTests: XCTestCase {
 
         XCTAssertNotNil(cell)
 
-        XCTAssertEqual(cell.photo?.url, photo.url, "Cell should get configured with correct photo")
+        XCTAssertEqual(cell.photo?.url, photo.url,
+                       "Cell should get configured with correct photo")
     }
 
 
@@ -311,8 +312,14 @@ extension GalleryDataProviderTests {
         }
     }
 
-    class MmckReachabilityManager: NSObject, ReachabilityManager {
+    class MockReachabilityManager: NSObject, ReachabilityManager {
+
         var currentState: NetworkState = .UnReachable
+
+        var isReachable: Bool {
+            return currentState == .Reachable
+        }
+
         func stopListeningForNetworkNotifications(listener: ReachabilityListener) {
             // ignore
         }

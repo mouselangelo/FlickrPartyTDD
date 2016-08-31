@@ -35,4 +35,5 @@ protocol PhotoManageable {
  and Data source for UICollectionView */
 protocol PhotoDataProvider: CollectionViewDataProvider, PhotoManageable {
     var photoCount: Int { get }
+    func itemAtIndex(index: Int) -> Photo?
 }

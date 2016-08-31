@@ -53,19 +53,17 @@ class GalleryViewController: UIViewController, ReachabilityListener {
     private func checkForReachability() {
         guard let reachabilityManager = reachabilityManager else { return }
 
-        print(reachabilityManager.currentState)
-
-        guard reachabilityManager.currentState == .UnReachable else {
-            if let _ = networkAlertController {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.networkAlertController = nil
-            }
+        guard reachabilityManager.isReachable else {
+            networkAlertController = showNoANetworAlert({
+                print("User tapped retry...")
+                self.checkForReachability()
+            })
             return
         }
-        networkAlertController = showNoANetworAlert({
-            print("User tapped retry...")
-            self.checkForReachability()
-        })
+        if let _ = networkAlertController {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.networkAlertController = nil
+        }
     }
 
     func onReachabilityChanged(notification: NSNotification) {
@@ -105,7 +103,8 @@ class GalleryViewController: UIViewController, ReachabilityListener {
         flowLayout.invalidateLayout()
     }
 
-    // initializes the collection view, sets its datasource and delegate and adds it to current view
+    // initializes the collection view, sets its datasource and delegate
+    // and adds it to current view
     private func initCollectionView() {
         let layout = initFlowLayout()
 
@@ -149,13 +148,9 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
             return
         }
 
-
-        guard let photoManager = dataProvider?.photoManager else { return }
-
-        let photoInfo = (photoManager, indexPath.item)
-
+        guard let dataProvider = dataProvider else { return }
         let photoVC = PhotoViewController()
-        photoVC.photoInfo = photoInfo
+        photoVC.photo = dataProvider.itemAtIndex(indexPath.item)
         photoVC.reachabilityManager = reachabilityManager
         navigationController?.pushViewController(photoVC, animated: true)
     }

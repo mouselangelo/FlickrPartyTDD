@@ -22,6 +22,10 @@ class GalleryDataProvider: NSObject, PhotoDataProvider, ReachabilityListener {
         return photoManager?.count ?? 0
     }
 
+    func itemAtIndex(index: Int) -> Photo? {
+        return photoManager?.itemAtIndex(index)
+    }
+
     override init() {
         super.init()
         registerForNotifications()
@@ -38,7 +42,7 @@ class GalleryDataProvider: NSObject, PhotoDataProvider, ReachabilityListener {
         print("DataProvider reachability changed...")
 
         guard let reachability = notification.object as? ReachabilityManager else { return }
-        isNetworkReachable = reachability.currentState == .Reachable
+        isNetworkReachable = reachability.isReachable
 
         if isNetworkReachable {
             photoManager?.resume()
@@ -68,8 +72,8 @@ class GalleryDataProvider: NSObject, PhotoDataProvider, ReachabilityListener {
             object: photoManager)
 
         // Reachability Notifications
-        let reachability = DefaultReachabilityManager.sharedInstance
-        isNetworkReachable = reachability.currentState == .Reachable
+        let reachability = DefaultReachabilityManagerFactory.defaultManager()
+        isNetworkReachable = reachability.isReachable
         reachability.startListeningForNetworkNotifications(self)
     }
 

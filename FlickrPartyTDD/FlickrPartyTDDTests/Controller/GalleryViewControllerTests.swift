@@ -63,7 +63,7 @@ class GalleryViewControllerTests: XCTestCase {
 
         _ = sut.view
 
-        let photo = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!)
+        let photo: Photo = PhotoItem(url: NSURL(string: "")!, thumbnailURL: NSURL(string: "")!)
         sut.dataProvider?.photoManager?.add(photo)
 
         sut.collectionView.delegate?
@@ -76,15 +76,13 @@ class GalleryViewControllerTests: XCTestCase {
             return
         }
 
-        guard let info = photoVC.photoInfo else {
-            XCTFail("PhotoInfo should have been set")
+        guard let photoVCPhoto = photoVC.photo else {
+            XCTFail("Photo should have been set")
             return
         }
 
-        let photoManager = sut.dataProvider?.photoManager
-        XCTAssertEqual(info.1, 0, "Index should be what we set")
-        XCTAssertTrue(info.0 === photoManager,
-                      "Same instance of PhotoManager should be used as the GalleryVC")
+        XCTAssertEqual(photoVCPhoto.url, photo.url, "Should be the same photo")
+
     }
 
 }

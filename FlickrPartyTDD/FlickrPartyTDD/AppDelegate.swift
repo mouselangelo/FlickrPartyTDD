@@ -14,16 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow? = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     let reachabilityManager: ReachabilityManager =
-        DefaultReachabilityManager.sharedInstance
+        DefaultReachabilityManagerFactory.defaultManager()
+
 
     func application(
         application: UIApplication,
         didFinishLaunchingWithOptions
         launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-        print("Reachability: \(reachabilityManager.currentState)")
-
-
         setupInitialViewController()
         window?.makeKeyAndVisible()
         return true

@@ -15,10 +15,13 @@ import Reachability
     case Reachable
     case UnReachable
 }
-
+/**
+ Conforming types can provide status of current network reachability
+ */
 protocol ReachabilityManager: class {
-    /** Returns the current network state */
-    var currentState: NetworkState { get }
+
+    /** Returns the current state of the network */
+    var isReachable: Bool { get }
 
     /**
      Starts listening for changes to the network state.
@@ -35,16 +38,28 @@ protocol ReachabilityManager: class {
     func stopListeningForNetworkNotifications(listener: ReachabilityListener)
 }
 
+/** Conforming types can provide an instance of ReachabilityManager */
+protocol ReachabilityManagerFactory {
+    static func defaultManager() -> ReachabilityManager
+}
+
+/** Provides instance of the default ReachabilityManager implementation */
+class DefaultReachabilityManagerFactory: ReachabilityManagerFactory {
+    static func defaultManager() -> ReachabilityManager {
+        return DefaultReachabilityManager.sharedInstance
+    }
+}
+
 /**
- Conforming types can register for
+ Conforming types can register for receiving NetworkStatusChangedNotification
  */
 @objc protocol ReachabilityListener: class {
     func onReachabilityChanged(notification: NSNotification)
 }
 
-final class DefaultReachabilityManager: NSObject, ReachabilityManager {
+class DefaultReachabilityManager: NSObject, ReachabilityManager {
 
-    private let networkStatusChangedNotification = "NetworkStatusChangedNotification"
+    static let networkStatusChangedNotification = "NetworkStatusChangedNotification"
 
     static let sharedInstance: DefaultReachabilityManager = DefaultReachabilityManager()
 
@@ -63,6 +78,10 @@ final class DefaultReachabilityManager: NSObject, ReachabilityManager {
         }
 
         return .Reachable
+    }
+
+    var isReachable: Bool {
+        return currentState == .Reachable
     }
 
     private var reachability: Reachability? = {
@@ -85,13 +104,13 @@ final class DefaultReachabilityManager: NSObject, ReachabilityManager {
         _ = try? reachability.startNotifier()
     }
 
-    internal func onReachabilityChanged(notification: NSNotification) {
+    func onReachabilityChanged(notification: NSNotification) {
         guard let reachability = notification.object as? Reachability else {
             fatalError("Notification should have been fired by Reachability")
         }
 
         NSNotificationCenter.defaultCenter().postNotificationName(
-            networkStatusChangedNotification, object: self)
+            DefaultReachabilityManager.networkStatusChangedNotification, object: self)
 
         if reachability.isReachable() {
             if reachability.isReachableViaWiFi() {
@@ -108,13 +127,13 @@ final class DefaultReachabilityManager: NSObject, ReachabilityManager {
 
         NSNotificationCenter.defaultCenter().addObserver(
             listener, selector: #selector(listener.onReachabilityChanged),
-            name: networkStatusChangedNotification, object: self)
+            name: DefaultReachabilityManager.networkStatusChangedNotification, object: self)
     }
 
     func stopListeningForNetworkNotifications(listener: ReachabilityListener) {
         NSNotificationCenter.defaultCenter().removeObserver(
             listener,
-            name: networkStatusChangedNotification, object: self)
+            name: DefaultReachabilityManager.networkStatusChangedNotification, object: self)
     }
 
 }
